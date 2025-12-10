@@ -56,7 +56,7 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
   };
 
   try {
-    const response = await fetch('https://tdwuznik.app.n8n.cloud/webhook-test/lead-form', {
+    const response = await fetch('https://tdwuznik.app.n8n.cloud/webhook/lead-form', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -75,4 +75,5 @@ document.getElementById('leadForm').addEventListener('submit', async (e) => {
 </script>
 
 </body>
+
 </html>
