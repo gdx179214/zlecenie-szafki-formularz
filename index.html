@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Zlecenie szafki</title>
+</head>
+<body>
+
+<h2>Zlecenie wykonania szafki</h2>
+
+<form id="leadForm">
+  <h3>Dane kontaktowe</h3>
+  <input name="full_name" placeholder="Imię i nazwisko" required><br><br>
+  <input name="email" type="email" placeholder="Email" required><br><br>
+  <input name="phone" placeholder="Telefon"><br><br>
+
+  <h3>Szczegóły szafki</h3>
+  <label>Rodzaj szafki:</label>
+  <select name="cabinet_type" required>
+    <option value="">--Wybierz--</option>
+    <option value="wiszaca">Wiszaca</option>
+    <option value="stojaca">Stojaca</option>
+  </select><br><br>
+
+  <label>Wymiary (cm):</label><br>
+  <input name="height" type="number" placeholder="Wysokość" required>
+  <input name="width" type="number" placeholder="Szerokość" required>
+  <input name="depth" type="number" placeholder="Głębokość" required><br><br>
+
+  <label>Materiał / kolor:</label>
+  <input name="material" placeholder="np. drewno / MDF / kolor biały"><br><br>
+
+  <label>Dodatkowa wiadomość:</label>
+  <textarea name="message" placeholder="Tutaj wpisz dodatkowe informacje"></textarea><br><br>
+
+  <button type="submit">Wyślij zlecenie</button>
+</form>
+
+<script>
+document.getElementById('leadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+
+  const data = {
+    full_name: form.full_name.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    cabinet_type: form.cabinet_type.value,
+    height: form.height.value,
+    width: form.width.value,
+    depth: form.depth.value,
+    material: form.material.value,
+    message: form.message.value,
+    token: 'SEKRETNY_TOKEN'
+  };
+
+  try {
+    const response = await fetch('https://tdwuznik.app.n8n.cloud/webhook-test/lead-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      alert('Zlecenie wysłane!');
+      form.reset();
+    } else {
+      alert('Błąd wysyłki formularza: ' + response.status);
+    }
+  } catch (err) {
+    alert('Błąd połączenia: ' + err);
+  }
+});
+</script>
+
+</body>
+</html>
