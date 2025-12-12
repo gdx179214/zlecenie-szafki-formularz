@@ -101,21 +101,22 @@
 </head>
 <body>
 
-<h2>Zlecenie wykonania szafki</h2>
-
 <form id="leadForm">
+  <h2>Zlecenie wykonania szafki</h2>
+
   <h3>Dane kontaktowe</h3>
-  <input name="full_name" placeholder="Imię i nazwisko" required><br><br>
-  <input name="email" type="email" placeholder="Email" required><br><br>
-  <input name="phone" placeholder="Telefon"><br><br>
+  <input type="text" name="full_name" placeholder="Imię i nazwisko" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="phone" placeholder="Telefon">
 
   <h3>Szczegóły szafki</h3>
+
   <label for="cabinet_type">Rodzaj szafki:</label>
   <select name="cabinet_type" id="cabinet_type" required>
     <option value="">--Wybierz--</option>
     <option value="wiszaca">Wiszaca</option>
     <option value="stojaca">Stojaca</option>
-  </select><br><br>
+  </select>
 
   <label>Wymiary (cm):</label><br>
   <input name="height" type="number" placeholder="Wysokość" required>
@@ -123,10 +124,10 @@
   <input name="depth" type="number" placeholder="Głębokość" required><br><br>
 
   <label for="material">Materiał / kolor:</label>
-  <input name="material" id="material" placeholder="np. drewno / MDF / kolor biały"><br><br>
+  <input type="text" name="material" id="material" placeholder="np. drewno / MDF / kolor biały">
 
   <label for="message">Dodatkowa wiadomość:</label>
-  <textarea name="message" id="message" placeholder="Tutaj wpisz dodatkowe informacje"></textarea><br><br>
+  <textarea name="message" id="message" placeholder="Tutaj wpisz dodatkowe informacje"></textarea>
 
   <button type="submit">Wyślij zlecenie</button>
 </form>
