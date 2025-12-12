@@ -1,56 +1,163 @@
-#leadForm input,
-#leadForm select,
-#leadForm textarea {
-  margin-bottom: 16px;
-}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Zlecenie szafki - stolarz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+      margin: 0;
+    }
 
-#leadForm h3 {
-  background: #f8f9fa;
-  padding: 10px 14px;
-  border-radius: 6px;
-}
+    #leadForm {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
 
-#leadForm {
-  animation: fadeInUp 0.5s ease-out;
-}
+    h2 {
+      color: #007bff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
+    h3 {
+      color: #555;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 10px;
+      margin-top: 25px;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[name="phone"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    #leadForm > label + br + input[type="number"] {
+      width: calc(33.33% - 8px);
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    button[type="submit"] {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+<form id="leadForm">
+  <h2>Zlecenie wykonania szafki</h2>
+
+  <h3>Dane kontaktowe</h3>
+  <input type="text" name="full_name" placeholder="Imię i nazwisko" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="phone" placeholder="Telefon">
+
+  <h3>Szczegóły szafki</h3>
+
+  <label for="cabinet_type">Rodzaj szafki:</label>
+  <select name="cabinet_type" id="cabinet_type" required>
+    <option value="">--Wybierz--</option>
+    <option value="wiszaca">Wiszaca</option>
+    <option value="stojaca">Stojaca</option>
+  </select>
+
+  <label>Wymiary (cm):</label>
+  <input name="height" type="number" placeholder="Wysokość" required>
+  <input name="width" type="number" placeholder="Szerokość" required>
+  <input name="depth" type="number" placeholder="Głębokość" required>
+
+  <label for="material">Materiał / kolor:</label>
+  <input type="text" name="material" id="material" placeholder="np. drewno / MDF / kolor biały">
+
+  <label for="message">Dodatkowa wiadomość:</label>
+  <textarea name="message" id="message" placeholder="Tutaj wpisz dodatkowe informacje"></textarea>
+
+  <button type="submit">Wyślij zlecenie</button>
+</form>
+
+<script>
+document.getElementById('leadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+
+  const data = {
+    full_name: form.full_name.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    cabinet_type: form.cabinet_type.value,
+    height: form.height.value,
+    width: form.width.value,
+    depth: form.depth.value,
+    material: form.material.value,
+    message: form.message.value,
+    token: 'SEKRETNY_TOKEN'
+  };
+
+  try {
+    const response = await fetch('https://tdwuznik.app.n8n.cloud/webhook/lead-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      alert('Zlecenie wysłane!');
+      form.reset();
+    } else {
+      alert('Błąd wysyłki formularza: ' + response.status);
+    }
+  } catch (err) {
+    alert('Błąd połączenia: ' + err);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+});
+</script>
 
-input:required,
-select:required {
-  border-left: 4px solid #007bff;
-}
-
-input[type="number"] {
-  text-align: center;
-}
-
-input:hover,
-select:hover,
-textarea:hover {
-  border-color: #80bdff;
-}
-
-button[type="submit"]:active {
-  transform: scale(0.98);
-}
-
-@media (max-width: 600px) {
-  #leadForm {
-    padding: 25px 20px;
-  }
-
-  #leadForm > label + br + input[type="number"] {
-    width: 100%;
-    margin-right: 0;
-  }
-}
+</body>
+</html>
